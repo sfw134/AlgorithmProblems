@@ -36,7 +36,7 @@ class Solution:
             if B[k] == 0:
                 break
         #处理相等的情况
-        if B[:n-1] == ([1] * (n-1)) and B[n-1] == 1:
+        if B == [1] * n:
             s = s+1
         return s
         
