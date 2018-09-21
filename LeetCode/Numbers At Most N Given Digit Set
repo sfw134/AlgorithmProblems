@@ -1,0 +1,41 @@
+class Solution:
+
+    def atMostNGivenDigitSet(self, D, N):
+        """
+        :type D: List[str]
+        :type N: int
+        :rtype: int
+        """
+        
+        L = str(N)
+        n = len(L)
+        d = len(D)
+        s = 0
+        x = d
+        #计算位数小于给定N的位数的所有情况
+        for i in range(1, n):
+            s = s + x
+            x = x*d
+        #计算位数等于给定N的位数的所有情况
+        #对于N中每一位数，用A存储小于其值的个数，用B记录是否有等于其值的
+        A = [0] * n
+        B = [0] * n
+        for j in range(n):
+            count1 = 0
+            count2 = 0
+            for y in D:
+                if y< L[j]:
+                    count1 += 1
+                elif y == L[j]:
+                    count2 += 1
+            A[j] = count1
+            B[j] = count2
+        #对于位数相等的两个数字，若第一位小则整个数小，若相等则比较下一位
+        for k in range(n):
+            s = s + A[k] * pow(d,n-k-1)
+            if B[k] == 0:
+                break
+        if B[n-1] == 1:
+            s = s+1
+        return s
+        
