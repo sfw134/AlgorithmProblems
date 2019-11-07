@@ -1,0 +1,47 @@
+#根据慕课西安邮电大学《数据结构与算法》所写
+#计算next值
+def cal_next(T):
+    next_ = [None for i in range(len(T))]
+    next_[0] = -1
+    j = 0
+    while j < len(T) - 1:
+        k = next_[j]
+        while (k > -1):
+            if (T[j] == T[k]):
+                next_[j+1] = k + 1
+                break
+            else:
+                k = next_[k]
+        if (k == -1):
+            next_[j+1] = 0
+        j += 1
+    return next_
+
+#计算nextval值
+def cal_nextval(T):
+    next_ = cal_next(T)
+    nextval = [None for i in range(len(T))]
+    nextval[0] = -1
+    for j in range(1, len(T)):
+        k = next_[j]
+        if (T[k] == T[j]):
+            nextval[j] = nextval[k]
+        else:
+            nextval[j] = next_[j]          
+    return nextval
+   
+ #KMP算法
+ def match(S, T):
+    i = 0
+    j = 0
+    nextval = cal_nextval(T)
+    while (i < len(S) and j < len(T)):
+        if (j == -1 or S[i] == T[j]):
+            i+=1
+            j+=1
+        else:
+            j = nextval[j]
+    if j == len(T):
+        return i-j
+    else:
+        return -1
