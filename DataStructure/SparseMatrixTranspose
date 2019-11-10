@@ -1,0 +1,43 @@
+#将稀疏矩阵转化为三元组
+def trans_to_triple(M):
+    M_triple = []
+    m = len(M)
+    n = len(M[0])
+    for i in range(m):
+        for j in range(n):
+            e = M[i][j]
+            if e != 0:
+                M_triple.append((i, j, e))
+    return M_triple, m, n
+
+#计算转换后每行对应的起始位置
+def cal_pos(M, m, n):
+    num = [0 for i in range(n)]
+    for i in range(len(M)):
+        num[M[i][1]] += 1
+    pos = [0 for i in range(n)]
+    for i in range(1, len(M)):
+        pos[i] = pos[i-1] + num[i-1]
+    return pos
+
+#计算转换后的新三元组
+def cal_T(M, m, n, pos):
+    T = [0 for i in range(len(M))]
+    for i in range(len(M)):
+        row = M[i][0]
+        col = M[i][1]
+        e = M[i][2]
+        T[pos[col]] = (col, row, e)
+        pos[col] += 1
+    return T
+    
+#示例
+M = [[0, 14, 0, 0, -5], [0, -7, 0, 0, 0], [36, 0, 0, 28, 0]]
+
+M_, m ,n = trans_to_triple(M)
+
+pos = cal_pos(M_, m, n)
+
+T = cal_T(M_, m, n, pos)
+
+print(T)
