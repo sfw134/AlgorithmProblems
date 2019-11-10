@@ -30,8 +30,8 @@ def cal_nextval(T):
             nextval[j] = next_[j]          
     return nextval
    
- #KMP算法
- def match(S, T):
+#KMP算法
+def match(S, T):
     i = 0
     j = 0
     nextval = cal_nextval(T)
@@ -45,3 +45,8 @@ def cal_nextval(T):
         return i-j
     else:
         return -1
+
+#示例
+S = 'acabaabaabcacaabc'
+T = 'abaabcac'
+print(match(S, T))
